@@ -2,11 +2,13 @@ const express = require("express");
 const app = express();
 const http = require("http");
 const path = require("path");
-
 const socketio = require("socket.io");
+const dotenv = require("dotenv");
+
+// Load environment variables from .env file
+dotenv.config();
 
 const server = http.createServer(app);
-
 const io = socketio(server);
 
 app.set("view engine", "ejs");
@@ -26,4 +28,7 @@ app.get("/", function (req, res) {
   res.render("index");
 });
 
-server.listen(3000);
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, function () {
+  console.log(`Server running on port ${PORT}`);
+});
